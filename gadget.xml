@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<gadget>
+    <name>Magic Simple </name>
+    <namespace>allianzgi</namespace>
+    <version>3.0</version>
+    <author name="AllianzGi">
+        <info url="http://wr-magic:25738/production.html"/>
+        <logo src="images/icon.png" />      
+    </author>
+    <copyright>© 2012 AllianzGi</copyright>
+    <description>Magic simple Widget</description>
+    <icons>
+    <icon height="100" width="100" src="images/icon.jpg" />
+  </icons>
+    <hosts>
+        <host name="sidebar">
+            <base type="HTML" apiVersion="1.0.0" src="magic.html" />
+            <permissions>full</permissions>
+            <platform minPlatformVersion="0.1" />
+        </host>
+    </hosts>
+</gadget>

@@ -1,0 +1,97 @@
+body
+{
+    width: 130px;
+    height: 120px;
+    margin: 0px;	
+}
+
+#background
+{
+    width: 130px;
+    height: 120px;
+    position: absolute;
+    z-index: 1;
+    background-repeat: no-repeat;
+}
+
+#searchBox
+{
+    color:#gray;
+    top: 33px;
+    left: 8px;
+    width: 98px;
+    height: 16px;
+    position: absolute;
+    z-index: 0;
+    font-family: Segoe UI; font-size: 12px; border-style: 0;
+	border: 1 solid #ddd;
+}
+
+#button 
+{
+    position:absolute;
+    left:106px;
+    top:33px;
+    width:16px;
+    height:16px;
+    z-index:3;
+}
+
+#button2 
+{
+    position:absolute;
+    left:106px;
+    top:66px;
+    width:16px;
+    height:16px;
+    z-index:3;
+}
+
+#searchText
+{
+    position:absolute;
+    font-family: Segoe UI;
+    font-size:12px;
+    color:gray;
+    top:33px;
+    left:10px;
+    z-index:3
+}  
+
+#samLink_PRODUCTIONx
+{
+    position:absolute;
+    font-family: Segoe UI;
+    font-size:12px;
+    color:gray;
+    top:33px;
+    left:10px;
+    z-index:3
+}   
+
+#gabiLink_PRODUCTIONx
+{
+    position:absolute;
+    font-family: Segoe UI;
+    font-size:12px;
+    color:gray;
+    top:66px;
+    left:10px;
+    z-index:3
+} 
+
+#applicationList{
+    position:relative;
+}
+
+.applicationPanel {
+    font-family: Segoe UI;
+    font-size:12px;
+    color:gray;
+ }  
+
+.logo{
+    position:relative;
+	width:25px;
+	height:25px;
+} 
