@@ -67,11 +67,12 @@ body
     z-index:3
 } 
 
-#applicationList{
+.applicationList{
     position:relative;
 }
 
 .applicationPanel {
+    position:relative;
     font-family: Segoe UI;
     font-size:12px;
     color:gray;

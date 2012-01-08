@@ -18,6 +18,10 @@ var L_ARTICLES_TEXT = new Array();
 function loadMain() {
     System.Gadget.onUndock = checkState;
     System.Gadget.onDock = checkState;
+    g_currentFeedUrl="http://mini-marco/applications_sample.xml";
+    buildApplicationList();
+
+    updateHtml();
 }
 
 function launchSearch()
@@ -135,4 +139,66 @@ function AddFeedToDropDown(_feedText, _feedValue) {
     rssFeedSelection.add(objEntry);
 }
 
+ ////////////////////////////////////////////////////////////////////////////////
+ //
+ // MAGIC FUNCTIONS
+ //
+ ////////////////////////////////////////////////////////////////////////////////
+
+ function buildApplicationList() {
+     rssObj = new ActiveXObject("Msxml2.XMLHTTP");
+     rssObj.open("GET",
+                 g_currentFeedUrl,
+                 true);
+     rssObj.onreadystatechange = function() {
+         if (rssObj.readyState === 4) {
+             if (rssObj.status === 200) {
+                 rssXML = rssObj.responseXML;
+                 parseApplicationList();
+                 if (chkConn) {
+                     clearInterval(chkConn);
+                 }
+             }
+             else {
+                 var chkConn;
+                 chkConn = setInterval(buildApplicationList, 30 * 60000);
+             }
+         }
+     }
+     rssObj.send(null);
+ }
+
+ function parseApplicationList() {
+     rssItems = rssXML.getElementsByTagName("applications");
+     rssTitle = null;
+     rssAuthors = null;
+     rssSummary = null;
+     rssLink = null;
+     for (i = start; i <  rssItems.length; i++) {
+
+         tmpApplication= new Object();
+
+         rssTitle = rssItems[i].firstChild.text;
+         rssDisplayName = rssItems[i].getElementsByTagName("displayName");
+         tmpApplication.DisplayName = rssDisplayName[0].text;
+
+         leaderName = rssItems[i].getElementsByTagName("leaderName");
+         tmpApplication.leaderName = leaderName[0].text;
+
+         rssSummary = rssItems[i].getElementsByTagName("description");
+         tmpApplication.rssSummary = rssSummary[0].text;
+
+         g_applicationList[i]=tmpApplication;
+     }
+ }
+
+ function updateHtml(){
+    vInnerHtml="";
+    for (var i = 0; i < g_applicationList.length; i++) {
+        vInnerHtml = vInnerHtml+"<div id='application_'"+i+" class='applicationPanel'>"
+        +"<a id='samLink_PRODUCTION' href='http://wr-magic:25738/download/SAM/PRODUCTION/CLIENT-ADMIN/sam-admin-gui.jnlp'>SAM</a>"
+        +"</div>"
+    }
+    applicationList.innerHtml= vInnerHtml;
+ }
 
