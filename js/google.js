@@ -14,6 +14,12 @@ var g_currentFeedUrl = "";
 var L_TITLEFORDROP_TEXT = "url dans magic";
 var L_ARTICLES_TEXT = new Array();
 
+
+function loadMain() {
+    System.Gadget.onUndock = checkState;
+    System.Gadget.onDock = checkState;
+}
+
 function launchSearch()
 {
 //        var userInput = document.getElementById("srchBox").value;
@@ -71,8 +77,6 @@ function undockedState()
         width=260;
 	with(slideshowBg.style)
         width=260;
-	with(searchBox.style)
-		width=230;
 	with(button.style)
 		left=230;
 	
@@ -90,85 +94,15 @@ function dockedState()
         width=130;
 	with(slideshowBg.style)
         width=130;
-	with(searchBox.style)
-		width=100;
 	with(button.style)
 		left=107;
      
 	slideshowBg.src="url(images/background.png)";
 }
-
-////////////////////////////////////////////////////////////////////////////////
-//
-// MAGIC FUNCTIONS
-//
-////////////////////////////////////////////////////////////////////////////////
-
-function getRSS(url) {
-    loading.innerText = "Connecting...";
-    rssObj = new ActiveXObject("Msxml2.XMLHTTP");
-    rssObj.open("GET",
-                url,
-                true);
-    rssObj.onreadystatechange = function() {
-        if (rssObj.readyState === 4) {
-            if (rssObj.status === 200) {
-                loading.innerText = "";
-                rssXML = rssObj.responseXML;
-                page = 0;
-                parseRSS();
-                if (chkConn) {
-                    clearInterval(chkConn);
-                }
-            }
-            else {
-                var chkConn;
-                loading.innerText = "Unable to connect...";
-                chkConn = setInterval(getRSS, 30 * 60000);
-            }
-        }
-        else {
-            loading.innerText = "Connecting...";
-        }
-    }
-    rssObj.send(null);
-}
-
-function parseRSS(page) {
-    if (!page) {
-        page = 0;
-    }
-    start = page * 5;
-    end = (page * 5) + 5;
-    rssItems = rssXML.getElementsByTagName("applications");
-    rssTitle = null;
-    rssAuthors = null;
-    rssSummary = null;
-    rssLink = null;
-
-    if (end > rssItems.length) {
-        end = rssItems.length
-    }
-    for (i = start; i <  rssItems.length; i++) {
-        rssTitle = rssItems[i].firstChild.text;
-        rssDisplayName = rssItems[i].getElementsByTagName("displayName");
-        tmpApplication.DisplayName = rssDisplayName[0].text;
-
-        leaderName = rssItems[i].getElementsByTagName("leaderName");
-        tmpApplication.leaderName = leaderName[0].text;
-
-        rssSummary = rssItems[i].getElementsByTagName("description");
-        tmpApplication.rssSummary = rssSummary[0].text;
-
-        g_applicationList[i]=tmpApplication
-    }
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
+ ////////////////////////////////////////////////////////////////////////////////
 //
 // GEstion des settings
-// 
+//
 ////////////////////////////////////////////////////////////////////////////////
 
 function loadSettings() {
@@ -176,13 +110,14 @@ function loadSettings() {
     g_currentFeedPath = tempSettings.rssFeedPath;
     g_currentFeedUrl = tempSettings.rssFeedUrl;
 }
+
 ////////////////////////////////////////////////////////////////////////////////
 //
 //
 ////////////////////////////////////////////////////////////////////////////////
 function createFeedDropDown() {
-    AddFeedToDropDown(L_TITLEFORDROP_TEXT, "defaultGadg");
-    AddFeedToDropDown("Magic, "http://mini-marco/applications_sample.xml");    
+    AddFeedToDropDown(L_TITLEFORDROP_TEXT, "defaultGadget");
+    AddFeedToDropDown("Magic", 'http://mini-marco/applications_sample.xml');
 }
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -199,4 +134,5 @@ function AddFeedToDropDown(_feedText, _feedValue) {
     }
     rssFeedSelection.add(objEntry);
 }
+
 

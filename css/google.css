@@ -14,19 +14,6 @@ body
     background-repeat: no-repeat;
 }
 
-#searchBox
-{
-    color:#gray;
-    top: 33px;
-    left: 8px;
-    width: 98px;
-    height: 16px;
-    position: absolute;
-    z-index: 0;
-    font-family: Segoe UI; font-size: 12px; border-style: 0;
-	border: 1 solid #ddd;
-}
-
 #button 
 {
     position:absolute;
