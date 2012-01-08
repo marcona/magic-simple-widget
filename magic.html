@@ -5,6 +5,7 @@
 		<title>Magic</title>
 		<link href="../css/google.css" rel="stylesheet" type="text/css">
 		<script src="../js/google.js" language="javascript" type="text/javascript"></script>
+		<script src="../js/settings.js" language="javascript" type="text/javascript"></script>
 	</head>
 	<body scroll='no' onload="loadMain();">
 		<g:background src="images/background.png" id="slideshowBg" height="120">
@@ -39,5 +40,20 @@
 				System.Gadget.onDock = checkState;
 			}
 		</script>
+
+		    <script language="Javascript">
+    ///////////////////////////////////////////////////////////////////
+    System.Gadget.onShowSettings = function ()
+    {
+        loadSettings();
+    }
+    System.Gadget.onSettingsClosed = function(event)
+    {
+        if(event.closeAction == event.Action.commit)
+        {
+            loadMain();
+        }
+    }
+    </script>
 	</body>
 </html>
