@@ -6,5 +6,5 @@ Url du fichier des applications :
 http://192.168.1.81/applications_sample.xml
 
 
-
+chrome.exe --allow-file-access-from-files
 

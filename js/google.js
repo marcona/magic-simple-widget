@@ -12,15 +12,14 @@ var g_currentFeedUrl = "";
 
 // Settings
 var L_TITLEFORDROP_TEXT = "url dans magic";
-var L_ARTICLES_TEXT = new Array();
+var L_ARTICLES_TEXT = new Array(10);
 
 
 function loadMain() {
     System.Gadget.onUndock = checkState;
     System.Gadget.onDock = checkState;
-    g_currentFeedUrl="http://mini-marco/applications_sample.xml";
+    g_currentFeedUrl="http://192.168.1.81/applications_sample.xml";
     buildApplicationList();
-
     updateHtml();
 }
 
@@ -81,9 +80,6 @@ function undockedState()
         width=260;
 	with(slideshowBg.style)
         width=260;
-	with(button.style)
-		left=230;
-	
 	slideshowBg.src="url(images/background2.png)";
 
 }
@@ -98,9 +94,6 @@ function dockedState()
         width=130;
 	with(slideshowBg.style)
         width=130;
-	with(button.style)
-		left=107;
-     
 	slideshowBg.src="url(images/background.png)";
 }
  ////////////////////////////////////////////////////////////////////////////////
@@ -121,7 +114,7 @@ function loadSettings() {
 ////////////////////////////////////////////////////////////////////////////////
 function createFeedDropDown() {
     AddFeedToDropDown(L_TITLEFORDROP_TEXT, "defaultGadget");
-    AddFeedToDropDown("Magic", 'http://mini-marco/applications_sample.xml');
+    AddFeedToDropDown("Magic", 'http://192.168.1.81/applications_sample.xml');
 }
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -169,36 +162,44 @@ function AddFeedToDropDown(_feedText, _feedValue) {
  }
 
  function parseApplicationList() {
-     rssItems = rssXML.getElementsByTagName("applications");
-     rssTitle = null;
-     rssAuthors = null;
-     rssSummary = null;
-     rssLink = null;
-     for (i = start; i <  rssItems.length; i++) {
+    rssItems = rssXML.getElementsByTagName("application");
+    window.prompt("rssItems", rssItems.length);
+    rssTitle = null;
+    rssAuthors = null;
+    rssSummary = null;
+    rssLink = null;
+    str="<!-"
+    for (i = 0; i < rssItems.length; i++) {
+    try{
+    tmpApplication= new Object();
+    if(!(rssItems[i].firstChild.text.match("^"+str)==str)){
+    rssTitle = rssItems[i].firstChild.text;
+    rssDisplayName = rssItems[i].getElementsByTagName("displayName");
+    tmpApplication.DisplayName = rssDisplayName[0].text;
 
-         tmpApplication= new Object();
+    leaderName = rssItems[i].getElementsByTagName("leaderName");
+    tmpApplication.leaderName = leaderName[0].text;
 
-         rssTitle = rssItems[i].firstChild.text;
-         rssDisplayName = rssItems[i].getElementsByTagName("displayName");
-         tmpApplication.DisplayName = rssDisplayName[0].text;
+    rssSummary = rssItems[i].getElementsByTagName("description");
+    tmpApplication.rssSummary = rssSummary[0].text;
 
-         leaderName = rssItems[i].getElementsByTagName("leaderName");
-         tmpApplication.leaderName = leaderName[0].text;
+    g_applicationList[i]=tmpApplication;
+    }
+    }
+    catch (err){
 
-         rssSummary = rssItems[i].getElementsByTagName("description");
-         tmpApplication.rssSummary = rssSummary[0].text;
-
-         g_applicationList[i]=tmpApplication;
+    }
      }
+          window.prompt("g_applicationList", g_applicationList.length);
+
  }
 
  function updateHtml(){
     vInnerHtml="";
     for (var i = 0; i < g_applicationList.length; i++) {
         vInnerHtml = vInnerHtml+"<div id='application_'"+i+" class='applicationPanel'>"
-        +"<a id='samLink_PRODUCTION' href='http://wr-magic:25738/download/SAM/PRODUCTION/CLIENT-ADMIN/sam-admin-gui.jnlp'>SAM</a>"
+        +"<a id='samLink_PRODUCTION' href='http://wr-magic:25738/download/SAM/PRODUCTION/CLIENT-ADMIN/sam-admin-gui.jnlp'>"+g_applicationList[i].DisplayName+"</a>"
         +"</div>"
     }
-    applicationList.innerHtml= vInnerHtml;
+    applicationList.innerHTML= vInnerHtml;
  }
-

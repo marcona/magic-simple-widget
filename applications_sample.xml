@@ -1,0 +1,151 @@
+<config>
+    <globalConfig>
+        <defaultApplicationLogoUrl>download/logo_defaut.png</defaultApplicationLogoUrl>
+        <gestionBugUrl>https://qc.allianz.de.awin/qcbin/start_a.htm</gestionBugUrl>
+    </globalConfig>
+    <applications>
+        <!-- ***********************************************************************************************************
+          |
+          | Office
+          |
+        -->
+        <application adsName="Excel">
+            <logoUrl>download/cognos.png</logoUrl>
+            <displayName>Excel</displayName>
+            <description>Excel Office 2010</description>
+            <leaderName>AssetSVP</leaderName>
+            <contactMail>assetsvp@allianzgi.fr</contactMail>
+            <launchFromDesktop>
+                <hrefApplicationId>excel</hrefApplicationId>
+                <assertPathExists>C:\Program Files\Microsoft Office\Office14\EXCEL.EXE</assertPathExists>
+                <command>C:\Program Files\Microsoft Office\Office14\EXCEL.EXE</command>
+            </launchFromDesktop>
+            <documentationUrl/>
+            <faqUrl/>
+            <environment>PRODUCTION</environment>
+            <habilitationIT>false</habilitationIT>
+        </application>
+
+        <!-- ***********************************************************************************************************
+          |
+          | OSCAR
+          |
+        -->
+        <application adsName="OSCAR">
+            <logoUrl>download/oscar.png</logoUrl>
+            <displayName>OSCAR</displayName>
+            <description>Asset repository for securities</description>
+            <leaderName>Bezault, Paul</leaderName>
+            <contactMail>gptauxsvp@allianzgi.fr</contactMail>
+            <launchUrl>download/GIMW/PRODUCTION/CLIENT/oscar-gui.jnlp</launchUrl>
+            <documentationUrl>http://wp-confluence.am.agf.fr/confluence/display/GIMWOscar/Dashboard</documentationUrl>
+            <faqUrl/>
+            <environment>PRODUCTION</environment>
+            <habilitationIT>true</habilitationIT>
+        </application>
+        <application adsName="OSCAR_recette">
+            <logoUrl>download/oscar.png</logoUrl>
+            <displayName>OSCAR</displayName>
+            <description>Asset repository for securities</description>
+            <leaderName>Bezault, Paul</leaderName>
+            <contactMail>gptauxsvp@allianzgi.fr</contactMail>
+            <launchUrl>download/GIMW/RECETTE/CLIENT/oscar-gui.jnlp</launchUrl>
+            <documentationUrl>http://wp-confluence.am.agf.fr/confluence/display/GIMWOscar/Dashboard</documentationUrl>
+            <faqUrl/>
+            <environment>RECETTE</environment>
+            <habilitationIT>true</habilitationIT>
+        </application>
+
+        <!-- ***********************************************************************************************************
+          |
+          | PRIM
+          |
+        -->
+        <application adsName="PRIM">
+            <logoUrl>download/prim.png</logoUrl>
+            <displayName>PRIM</displayName>
+            <description>Primary Market Management for Money Market portfolios managers</description>
+            <leaderName>Bezault, Paul</leaderName>
+            <contactMail>gptauxsvp@allianzgi.fr</contactMail>
+            <launchUrl>download/PRIM/PRD/CLIENT/prim-gui.jnlp</launchUrl>
+            <documentationUrl>http://wp-confluence.am.agf.fr/confluence/display/Prim/Dashboard</documentationUrl>
+            <faqUrl/>
+            <environment>PRODUCTION</environment>
+            <habilitationIT>false</habilitationIT>
+        </application>
+        <application adsName="PRIM_recette">
+            <logoUrl>download/prim.png</logoUrl>
+            <displayName>PRIM</displayName>
+            <description>Primary Market Management for Money Market portfolios managers</description>
+            <leaderName>Bezault, Paul</leaderName>
+            <contactMail>gptauxsvp@allianzgi.fr</contactMail>
+            <launchUrl>download/PRIM/REC/CLIENT/prim-gui.jnlp</launchUrl>
+            <documentationUrl>http://wp-confluence.am.agf.fr/confluence/display/Prim/Dashboard</documentationUrl>
+            <faqUrl/>
+            <environment>RECETTE</environment>
+            <habilitationIT>false</habilitationIT>
+        </application>
+
+        <!-- ***********************************************************************************************************
+          |
+          | RIDE
+          |
+        -->
+        <application adsName="RIDE">
+            <logoUrl>download/ride.png</logoUrl>
+            <displayName>RIDE</displayName>
+            <description>Reech Derivatives Asset repository</description>
+            <leaderName>Bezault, Paul</leaderName>
+            <contactMail>gptauxsvp@allianzgi.fr</contactMail>
+            <launchUrl>download/RIDE/PRODUCTION/CLIENT/ride-gui.jnlp</launchUrl>
+            <documentationUrl>http://wp-confluence.am.agf.fr/confluence/display/RIDE</documentationUrl>
+            <faqUrl/>
+            <environment>PRODUCTION</environment>
+            <habilitationIT>true</habilitationIT>
+        </application>
+        <application adsName="RIDE_recette">
+            <logoUrl>download/ride.png</logoUrl>
+            <displayName>RIDE</displayName>
+            <description>Reech Derivatives Asset repository</description>
+            <leaderName>Bezault, Paul</leaderName>
+            <contactMail>gptauxsvp@allianzgi.fr</contactMail>
+            <launchUrl>download/RIDE/RECETTE/CLIENT/ride-gui.jnlp</launchUrl>
+            <documentationUrl>http://wp-confluence.am.agf.fr/confluence/display/RIDE</documentationUrl>
+            <faqUrl/>
+            <environment>RECETTE</environment>
+            <habilitationIT>true</habilitationIT>
+        </application>
+
+        <!-- ***********************************************************************************************************
+          |
+          | ALIS2
+          |
+        -->
+        <application adsName="ALIS2">
+            <logoUrl>download/alis2.png</logoUrl>
+            <displayName>ALIS2</displayName>
+            <description>Reporting to IDS and local management</description>
+            <leaderName>Bernajuzan, Guillaume</leaderName>
+            <contactMail>guillaume.bernajuzan@allianzgi.fr</contactMail>
+            <launchUrl>download/ALIS2/PRODUCTION/CLIENT/alis2-gui.jnlp</launchUrl>
+            <documentationUrl>http://wp-confluence.am.agf.fr/confluence/display/ALIS2</documentationUrl>
+            <faqUrl/>
+            <environment>PRODUCTION</environment>
+            <habilitationIT>true</habilitationIT>
+        </application>
+        <application adsName="ALIS2_recette">
+            <logoUrl>download/alis2.png</logoUrl>
+            <displayName>ALIS2</displayName>
+            <description>Reporting to IDS and local management</description>
+            <leaderName>Bernajuzan, Guillaume</leaderName>
+            <contactMail>guillaume.bernajuzan@allianzgi.fr</contactMail>
+            <launchUrl>download/ALIS2/RECETTE/CLIENT/alis2-gui.jnlp</launchUrl>
+            <documentationUrl>http://wp-confluence.am.agf.fr/confluence/display/ALIS2</documentationUrl>
+            <faqUrl/>
+            <environment>RECETTE</environment>
+            <habilitationIT>true</habilitationIT>
+        </application>
+
+
+    </applications>
+</config>
