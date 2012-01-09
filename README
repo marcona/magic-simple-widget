@@ -8,3 +8,13 @@ http://192.168.1.81/applications_sample.xml
 
 chrome.exe --allow-file-access-from-files
 
+
+TODO :
+- faire un objet dedie pour le provider
+- regarder pour les TU javascript
+- installer un petit serveur web pour les tests
+
+- regarder si la config fonctionne
+
+- proprifier le code
+
