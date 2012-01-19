@@ -18,19 +18,24 @@ var L_ARTICLES_TEXT = new Array(10);
 function loadMain() {
     System.Gadget.onUndock = checkState;
     System.Gadget.onDock = checkState;
+    loadSettings();
     window.prompt("g_currentFeedUrl", g_currentFeedUrl);
     g_currentFeedUrl = "http://192.168.1.81/applications_sample.xml";
-    g_currentFeedUrl
-          = urlPrefix + "/administration.html?wicket:interface=:19:downloadPanel:link::ILinkListener::";
+//    g_currentFeedUrl
+//          = urlPrefix + "/administration.html?wicket:interface=:19:downloadPanel:link::ILinkListener::";
+
     buildApplicationList();
     updateHtml();
+
+    System.Gadget.onShowSettings = loadSettings;
+
+    document.body.focus();
+
+
+
 }
 
 function launchSearch() {
-//        var userInput = document.getElementById("srchBox").value;
-//        var processedString = encodeURIComponent(userInput);
-//		var sServer ="http://www.google.com";
-//    	var url = sServer +"/custom?hl=en&ie=UTF-8&oe=UTF-8&q=" + processedString + GoogleSearchURL;
     var url = "http://wr-magic:25738/download/SAM/PRODUCTION/CLIENT-ADMIN/sam-admin-gui.jnlp";
     //window.open(url);
     shell.Run(url);
@@ -104,8 +109,8 @@ function loadSettings() {
 //
 ////////////////////////////////////////////////////////////////////////////////
 function createFeedDropDown() {
-    AddFeedToDropDown(L_TITLEFORDROP_TEXT, "defaultGadget");
-    AddFeedToDropDown("Magic", 'http://192.168.1.81/applications_sample.xml');
+//    AddFeedToDropDown(L_TITLEFORDROP_TEXT, "defaultGadget");
+    AddFeedToDropDown("Magic-miniMac", 'http://192.168.1.81/applications_sample.xml');
     AddFeedToDropDown("Magic-Allianz",
                       'http://wr-magic:25738/administration.html?wicket:interface=:19:downloadPanel:link::ILinkListener::');
 }
@@ -178,8 +183,11 @@ function parseApplicationList() {
                 logoUrl = rssItems[i].getElementsByTagName("logoUrl");
                 tmpApplication.logoUrl = urlPrefix + '/' + logoUrl[0].text;
 
+                tmpApplication.launchUrl="http://google.fr";
                 launchUrl = rssItems[i].getElementsByTagName("launchUrl");
-                tmpApplication.launchUrl = urlPrefix + '/' + launchUrl[0].text;
+                if (launchUrl!=null){
+                    tmpApplication.launchUrl = urlPrefix + '/' + launchUrl[0].text;
+                }
 
                 g_applicationList[i] = tmpApplication;
             }
@@ -188,22 +196,25 @@ function parseApplicationList() {
 
         }
     }
-    window.prompt("g_applicationList", g_applicationList.length);
+    //window.prompt("g_applicationList", g_applicationList.length);
 
 }
 
 function updateHtml() {
     vInnerHtml = "";
-    for (var i = 0; i < g_applicationList.length; i++) {
+    //TODO  remplacer 4 par g_applicationList.length
+    for (var i = 0; i < 4; i++) {
+    if (g_applicationList[i]!=null){
         imgInnerHtml = "<a title=\"Lancer l'application\" href=\"" + g_applicationList[i].launchUrl + "\">"
                              + "<img class='logo' alt=logo src=\"" + g_applicationList[i].logoUrl + "\">"
               + "</a>"
 
-        vInnerHtml = vInnerHtml + "<div id='application_'" + i + " class='applicationPanel'>"
+        vInnerHtml = vInnerHtml + "<div id='application_" + i + "' class='applicationPanel'>"
                            + imgInnerHtml
-                           + "<a id='samLink_PRODUCTION' href='" + g_applicationList[i].launchUrl + "'>"
+                           + "<a id='application_label_" + i + "' href='" + g_applicationList[i].launchUrl + "'>"
                            + g_applicationList[i].DisplayName + "</a>"
               + "</div>"
+    }
     }
     applicationList.innerHTML = vInnerHtml;
 }
