@@ -15,6 +15,11 @@ var urlPrefix = "http://wr-magic:25738";
 var L_TITLEFORDROP_TEXT = "url dans magic";
 var L_ARTICLES_TEXT = new Array(10);
 
+//FLyout
+var g_feedClicked;
+var g_feedURL;
+var g_lastClickedUrl;
+
 function loadMain() {
     System.Gadget.onUndock = checkState;
     System.Gadget.onDock = checkState;
@@ -29,10 +34,21 @@ function loadMain() {
 
     System.Gadget.onShowSettings = loadSettings;
 
+    System.Gadget.Flyout.file = "flyout.html";
+
     document.body.focus();
 
 
 
+}
+
+
+function keyNavigateClose() {
+    switch (event.keyCode) {
+        case 27:
+            hideFlyout();
+            break;
+    }
 }
 
 function launchSearch() {
@@ -172,13 +188,13 @@ function parseApplicationList() {
             if (!(rssItems[i].firstChild.text.match("^" + str) == str)) {
                 rssTitle = rssItems[i].firstChild.text;
                 rssDisplayName = rssItems[i].getElementsByTagName("displayName");
-                tmpApplication.DisplayName = rssDisplayName[0].text;
+                tmpApplication.displayName = rssDisplayName[0].text;
 
                 leaderName = rssItems[i].getElementsByTagName("leaderName");
                 tmpApplication.leaderName = leaderName[0].text;
 
                 rssSummary = rssItems[i].getElementsByTagName("description");
-                tmpApplication.rssSummary = rssSummary[0].text;
+                tmpApplication.description = rssSummary[0].text;
 
                 logoUrl = rssItems[i].getElementsByTagName("logoUrl");
                 tmpApplication.logoUrl = urlPrefix + '/' + logoUrl[0].text;
@@ -211,10 +227,119 @@ function updateHtml() {
 
         vInnerHtml = vInnerHtml + "<div id='application_" + i + "' class='applicationPanel'>"
                            + imgInnerHtml
-                           + "<a id='application_label_" + i + "' href='" + g_applicationList[i].launchUrl + "'>"
-                           + g_applicationList[i].DisplayName + "</a>"
+                           + "<br><a id='application_label_" + i + "' href='" + g_applicationList[i].launchUrl + "'>"
+                           + g_applicationList[i].displayName + "</a>"
+                           + "<br><a id='applicationDetail_" + i + "' href='' ondblClick='showFlyout(this,"+i+");selectBack(this.parentElement);return false;' onClick='showFlyout(this,"+i+");selectBack(this.parentElement);return false;' onmouseover='toggleBack(this.parentElement, true);' onmouseout='toggleBack(this.parentElement, false);'>Detail</a>"
+
               + "</div>"
     }
     }
     applicationList.innerHTML = vInnerHtml;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//
+////////////////////////////////////////////////////////////////////////////////
+function toggleBack(objToChange, showBack) {
+    if (objToChange.innerText != g_feedClicked) {
+        if (!System.Gadget.docked) {
+            var backgroundToLoad = "url(images/item_hover_floating.png)";
+        }
+        else if (System.Gadget.docked) {
+            var backgroundToLoad = "url(images/item_hover_docked.png)";
+        }
+        if (showBack) {
+            eval("objToChange").style.backgroundImage = backgroundToLoad;
+        }
+        else {
+            eval("objToChange").style.backgroundImage = "";
+        }
+    }
+}
+////////////////////////////////////////////////////////////////////////////////
+//
+// set/swap background image when clicked/dblclicked
+//
+////////////////////////////////////////////////////////////////////////////////
+function selectBack(objToChange) {
+    g_feedClicked = objToChange.innerText;
+//    clearBack();
+}
+////////////////////////////////////////////////////////////////////////////////
+//
+// clear background image's and set selected article with image
+//
+////////////////////////////////////////////////////////////////////////////////
+function clearBack() {
+//    for (var i = 0; i < 4; i++) {
+//        if (eval("FeedItem" + i).innerText == g_feedClicked) {
+//            setSelectBack(eval("FeedItem" + i));
+//        }
+//        else {
+//            eval("FeedItem" + i).style.backgroundImage = "";
+//        }
+//    }
+}
+function showFlyout(feedAll, cpt) {
+    var tmpApplication= g_applicationList[cpt];
+
+    if (event.type == "click") {
+        if (g_feedURL == g_lastClickedUrl) {
+            System.Gadget.Flyout.show = false;
+            g_lastClickedUrl = "";
+        }
+        if (System.Gadget.Flyout.show) {
+            addContentToFlyout(tmpApplication);
+            g_lastClickedUrl = feedAll.href;
+        }
+        else {
+            System.Gadget.Flyout.show = true;
+            System.Gadget.Flyout.onShow = function() {
+                addContentToFlyout(tmpApplication);
+            }
+            System.Gadget.Flyout.onHide = function() {
+                g_feedClicked = null;
+                clearBack();
+            }
+            g_lastClickedUrl = feedAll.href;
+        }
+
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//
+////////////////////////////////////////////////////////////////////////////////
+function addContentToFlyout(tmpApplication) {
+    try {
+        if (System.Gadget.Flyout.show) {
+            var flyoutDiv = System.Gadget.Flyout.document;
+            try {
+                flyoutDiv.getElementById("flyoutTitleLink").innerText = tmpApplication.displayName;
+                flyoutDiv.getElementById("flyoutTitleLink").href = "http://google.fr";
+                flyoutDiv.getElementById("flyoutTitleLink").setAttribute("title", tmpApplication.displayName);
+                flyoutDiv.getElementById("flyoutTitleLink").style.textOverflow = "ellipsis";
+                flyoutDiv.getElementById("flyoutTitleLink").style.overflow = "hidden";
+                flyoutDiv.getElementById("flyoutTitleLink").style.whiteSpace = "nowrap";
+
+                flyoutDiv.getElementById("readOnlineLink").href = "http://google.fr";
+
+                flyoutDiv.getElementById("flyoutMainFeedDescription").innerHTML = tmpApplication.description;
+            }
+            catch(e) {
+            }
+        }
+    }
+    catch(e) {
+        //catch slow flyout - no div object will be available.
+    }
+}
+////////////////////////////////////////////////////////////////////////////////
+//
+//
+////////////////////////////////////////////////////////////////////////////////
+function hideFlyout() {
+    System.Gadget.Flyout.show = false;
 }
